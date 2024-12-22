@@ -1,2 +1,2 @@
-REM mypy --explicit-package-bases .
+mypy --explicit-package-bases .
 python main.py
