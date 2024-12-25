@@ -1,5 +1,6 @@
 from pyray import *
 from src.Engine import *
+from src.utils import *
 from typing import NamedTuple
 
 if __name__ == "__main__":
