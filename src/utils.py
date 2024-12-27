@@ -5,6 +5,44 @@ from src.Block import *
 from typing import Dict
 from typing import List
 
+
+def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
+	ix = int(block.pos.x)
+	iy = int(block.pos.y)
+
+	DIRECTIONS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+	num = 0
+
+	for i, (dx, dy) in enumerate(DIRECTIONS):
+		nx = (ix + dx) % grid_size
+		ny = (iy + dy) % grid_size
+
+		neighbor_block = grid[nx][ny]
+		if neighbor_block.name == block.name:
+			num |= (1 << i)
+
+	tile_list = [
+		11,  # 0b0000
+		12,  # 0b0001
+		13,  # 0b0010
+		6,   # 0b0011
+		14,  # 0b0100
+		9,   # 0b0101
+		0,   # 0b0110
+		3,   # 0b0111
+		15,  # 0b1000
+		8,   # 0b1001
+		10,  # 0b1010
+		7,   # 0b1011
+		2,   # 0b1100
+		5,   # 0b1101
+		1,   # 0b1110
+		4    # 0b1111
+	]
+
+	block.tile_index = tile_list[num]
+
+'''
 def auto_tiling(pos: Vector2, grid_size: int, grid: List[List[Block]]) -> None:
 	
 	block: Block = grid[int(pos.x)][int(pos.y)]
@@ -51,15 +89,17 @@ def auto_tiling(pos: Vector2, grid_size: int, grid: List[List[Block]]) -> None:
 		0b1000: 15
 	}
 	block.tile_index = tile[num]
-	'''
+'''
+	
+'''
 	print("\n")
 	for key, value in neighbors.items():
 		print(str(f"{key:6} -> {value}"))
 	print(str(f"{block}"))
 	'''
 	
-def auto_tiling_area(pos: Vector2, grid_size: int, grid: List[List[Block]], area: int) -> None:
-	block: Block = grid[int(pos.x)][int(pos.y)]
+def auto_tiling_area(block: Block, grid_size: int, grid: List[List[Block]], area: int) -> None:
+	#block: Block = grid[int(pos.x)][int(pos.y)]
 	center_x = int(block.pos.x)
 	center_y = int(block.pos.y)
 	offset = area // 2

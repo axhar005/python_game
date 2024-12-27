@@ -13,7 +13,7 @@ class Engine:
 		init_window(768, 448, "PtiCraft")
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32
-		self.grid_size = 300
+		self.grid_size = 30
 		self.mouse_pos: Vector2 = Vector2(0, 0)
 		self.grid_width_px = self.grid_size * self.tile_size
 		self.grid_height_px = self.grid_size * self.tile_size
@@ -34,14 +34,14 @@ class Engine:
 		self.player = self.objects["player"]
 		self.grid: List[List[Block]] = [
 			[
-				Block("floor", Vector2(row, col), self.sprites["deep_dirt"], 0)
+				Block("grass", Vector2(row, col), self.sprites["grass"], 0)
 				for col in range(self.grid_size)
 			]
 			for row in range(self.grid_size)
 		]
-		self.grid[0][0] = Block("bob", Vector2(0, 0), self.sprites["water"], 0)
-		self.grid[2][3] = Block("bob", Vector2(2, 3), self.sprites["water"], 0)
-		auto_tiling_area(Vector2(self.grid_size/2, self.grid_size/2), self.grid_size, self.grid, self.grid_size)
+		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"], 0)
+		self.grid[2][3] = Block("water", Vector2(2, 3), self.sprites["water"], 0)
+		auto_tiling_area(self.grid[int(self.grid_size/2)][int(self.grid_size/2)], self.grid_size, self.grid, self.grid_size)
 
 	def load_texure(self) -> None:
 		for key, paths in self.texture_path.items():
@@ -100,13 +100,11 @@ class Engine:
 			self.mouse_pos.x = self.grid_size + self.mouse_pos.x
 		if self.mouse_pos.y < 0:
 			self.mouse_pos.y = self.grid_size + self.mouse_pos.y
-		if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
-			block: Block = self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)]
-			if (block.name != "bob"):
-				self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)] = Block("bob", block.pos, self.sprites["water"], 2)
 		if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_RIGHT)):
 			block: Block = self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)]
-			auto_tiling_area(block.pos, self.grid_size, self.grid, 3)
+			if (block.name != "deep_dirt"):
+				self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)] = Block("deep_dirt", block.pos, self.sprites["deep_dirt"], 2)
+				auto_tiling_area(block, self.grid_size, self.grid, 3)	
 			
 		# Objects
 		for obj in self.objects.values():
