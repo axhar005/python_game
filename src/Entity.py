@@ -6,7 +6,20 @@ class Entity:
 		self.name: str = name
 		self.pos: Vector2 = position
 		self.sprite: List[Texture] = sprite
-		self.velocity: Vector2 = Vector2(0, 0)
+		self.sprite_size: int = len(sprite)
+		self.current_image: Texture = sprite[0]
+		self.animation_speed: float = 0.5
+		self.current_frame: int = 0
+		self.animation_timer: float = 0.0
 
+	def change_sprite(self, sprite: List[Texture]):
+		self.sprite = sprite
+		self.current_image = 0
+		self.sprite_size: int = len(sprite)
+		self.current_image: Texture = sprite[0]
+
+	def update(self):
+		pass
+	
 	def step(self) -> None:
 		pass

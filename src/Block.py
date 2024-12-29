@@ -6,11 +6,11 @@ class Block:
 		self.name: str = name
 		self.pos: Vector2 = position
 		self.sprite: List[Texture] = sprite
-		self.current_sprite: Texture = sprite[0]
+		self.current_image: Texture = sprite[0]
 		if (tile_index < len(sprite)):
 			self.tile_index = tile_index
 		else:
 			self.tile_index = 0
 
 	def __str__(self) -> str:
-		return f"Name: {self.name:5} | Pos: {int(self.pos.x)},{int(self.pos.y)} | tile_index: {self.tile_index}"
+		return f"Name: {self.name:5}\nPos: {int(self.pos.x)},{int(self.pos.y)}\ntile_index: {self.tile_index}"

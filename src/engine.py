@@ -6,11 +6,21 @@ from src.utils import *
 from typing import Dict
 from typing import List
 
-class Engine:
+class Singleton(type):
+	_instances = {}
+
+	def __call__(cls, *args, **kwargs):
+		if cls not in cls._instances:
+			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+		return cls._instances[cls]
+
+class Engine(metaclass=Singleton):
 	
 	def __init__(self) -> None:
 		set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
 		init_window(768, 448, "PtiCraft")
+		self.FPS = 60
+		#set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32
 		self.grid_size = 30
@@ -40,7 +50,6 @@ class Engine:
 			for row in range(self.grid_size)
 		]
 		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"], 0)
-		self.grid[2][3] = Block("water", Vector2(2, 3), self.sprites["water"], 0)
 		auto_tiling_area(self.grid[int(self.grid_size/2)][int(self.grid_size/2)], self.grid_size, self.grid, self.grid_size)
 
 	def load_texure(self) -> None:
@@ -64,10 +73,10 @@ class Engine:
 				screen_x = row_index * self.tile_size
 				screen_y = col_index * self.tile_size
 				block = self.grid[grid_x][grid_y]
-				draw_texture_ex(block.sprite[block.tile_index], Vector2(screen_x, screen_y), 0, 1, WHITE)
+				draw_texture_ex(block.current_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
 				if (grid_x == self.mouse_pos.x and grid_y == self.mouse_pos.y):
 					draw_texture_ex(self.sprites["selector"][0], Vector2(screen_x, screen_y), 0, 1, WHITE)
-		draw_texture_ex(self.player.sprite[0], self.player.pos, 0, 1, WHITE)
+		draw_texture_ex(self.player.current_image, self.player.pos, 0, 1, WHITE)
 
 	def draw(self) -> None:
 		begin_mode_2d(self.cam)
@@ -76,9 +85,10 @@ class Engine:
 		end_mode_2d()
 
 	def draw_gui(self) -> None:
-		draw_fps(20, 20)
+		draw_rectangle(5, 5, 200, 440, Color(0, 0, 0, 100))
+		draw_fps(10, 20)
 		t: Block = self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)]
-		draw_text(f"{t}", 20, 60, 20, WHITE)
+		draw_text(f"{t}", 10, 60, 20, WHITE)
 
 	def game_step(self) -> None:
 		# Player
@@ -100,30 +110,35 @@ class Engine:
 			self.mouse_pos.x = self.grid_size + self.mouse_pos.x
 		if self.mouse_pos.y < 0:
 			self.mouse_pos.y = self.grid_size + self.mouse_pos.y
-		if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_RIGHT)):
+		if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 			block: Block = self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)]
-			if (block.name != "deep_dirt"):
-				self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)] = Block("deep_dirt", block.pos, self.sprites["deep_dirt"], 2)
+			if (block.name != "dirt"):
+				self.grid[int(self.mouse_pos.x)][int(self.mouse_pos.y)] = Block("dirt", block.pos, self.sprites["dirt"], 2)
 				auto_tiling_area(block, self.grid_size, self.grid, 3)	
 			
 		# Objects
 		for obj in self.objects.values():
+			obj.update()
 			obj.step()
 		
 		# Cam
 		self.cam.target = self.player.pos
 	
 	def loop(self) -> None:
+		FRAME_DURATION = 1.0 / self.FPS
+		time_accumulator = 0.0
 		while not window_should_close():
-			self.delta_time = get_frame_time()
-			self.delta_time = min(self.delta_time, 0.5)  # Limite à 50 ms
+			delat_time = get_frame_time()
+			time_accumulator += delat_time
 
-			self.game_step()
+			while time_accumulator >= FRAME_DURATION:
+				self.game_step()
+				time_accumulator -= FRAME_DURATION
+
 			begin_drawing()
 			self.draw()
 			self.draw_gui()
 			end_drawing()
-			#print(f"X: {int(self.player.pos.x)}, Y: {int(self.player.pos.y)}")
 
 	def __str__(self) -> str:
 		return f"{self}"

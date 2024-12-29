@@ -6,9 +6,11 @@ from typing import List
 class Player(Entity):
 	def __init__(self, name: str, position: Vector2, sprite: List[Texture]) -> None:
 		super().__init__(name, position, sprite)
-		self.speed: float = 1.0
+		self.speed: float = 5.0
 
 	def step(self) -> None:
+		'''from .Engine import Engine
+		e: Engine = Engine()'''
 		if(is_key_down(KeyboardKey.KEY_W)):
 			self.pos.y -= self.speed
 		if(is_key_down(KeyboardKey.KEY_S)):

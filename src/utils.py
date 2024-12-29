@@ -2,11 +2,11 @@ from pyray import *
 from src.Entity import *
 from src.Player import *
 from src.Block import *
-from typing import Dict
 from typing import List
 
 
 def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
+
 	ix = int(block.pos.x)
 	iy = int(block.pos.y)
 
@@ -21,7 +21,7 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 		if neighbor_block.name == block.name:
 			num |= (1 << i)
 
-	tile_list = [
+	tile_list: List[int] = [
 		11,  # 0b0000
 		12,  # 0b0001
 		13,  # 0b0010
@@ -39,9 +39,10 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 		1,   # 0b1110
 		4    # 0b1111
 	]
-
-	block.tile_index = tile_list[num]
-
+	tile_index: int = tile_list[num]
+	if (tile_index < len(block.sprite)):
+		block.tile_index = tile_list[num]
+		block.current_image = block.sprite[block.tile_index]
 '''
 def auto_tiling(pos: Vector2, grid_size: int, grid: List[List[Block]]) -> None:
 	

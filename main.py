@@ -1,5 +1,5 @@
 from pyray import *
-from src.Engine import *
+from src.Engine import Engine
 from src.utils import *
 from typing import NamedTuple
 
