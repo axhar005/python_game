@@ -9,8 +9,6 @@ class Player(Entity):
 		self.speed: float = 5.0
 
 	def step(self) -> None:
-		'''from .Engine import Engine
-		e: Engine = Engine()'''
 		if(is_key_down(KeyboardKey.KEY_W)):
 			self.pos.y -= self.speed
 		if(is_key_down(KeyboardKey.KEY_S)):

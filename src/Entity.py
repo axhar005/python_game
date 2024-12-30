@@ -14,9 +14,9 @@ class Entity:
 
 	def change_sprite(self, sprite: List[Texture]):
 		self.sprite = sprite
-		self.current_image = 0
-		self.sprite_size: int = len(sprite)
-		self.current_image: Texture = sprite[0]
+		self.current_frame = 0
+		self.sprite_size = len(sprite)
+		self.current_image = sprite[0]
 
 	def update(self):
 		pass

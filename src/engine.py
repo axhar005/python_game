@@ -6,19 +6,13 @@ from src.utils import *
 from typing import Dict
 from typing import List
 
-class Singleton(type):
-	_instances = {}
-
-	def __call__(cls, *args, **kwargs):
-		if cls not in cls._instances:
-			cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-		return cls._instances[cls]
-
-class Engine(metaclass=Singleton):
+class Engine():
 	
 	def __init__(self) -> None:
 		set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
-		init_window(768, 448, "PtiCraft")
+		init_window(640, 360, "PtiCraft")
+		self.VIRTUAL_WIDTH: int = 640
+		self.VIRTUAL_HEIGHT: int = 360
 		self.FPS = 60
 		#set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
