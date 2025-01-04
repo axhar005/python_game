@@ -23,3 +23,6 @@ class Entity:
 	
 	def step(self) -> None:
 		pass
+	
+	def __str__(self) -> str:
+		return f"EName: {self.name:5}\nEPos: {int(self.pos.x)},{int(self.pos.y)}"

@@ -49,11 +49,16 @@ def draw(data: Data) -> None:
 	end_mode_2d()
 
 
-def draw_gui(data: Data) -> None:
+def dev(data: Data) -> None:
 	draw_rectangle(5, 5, 200, 440, Color(0, 0, 0, 100))
 	draw_fps(10, 20)
 	t: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
-	draw_text(f"{t}", 10, 60, 20, WHITE)
+	p: Player = data.player
+	draw_text(f"{t}\n{p}", 10, 60, 20, WHITE)
+
+
+def draw_gui(data: Data) -> None:
+	dev(data)
 
 
 def step(data: Data) -> None:
@@ -81,13 +86,7 @@ def step(data: Data) -> None:
 		if (block.name != "water"):
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("water", block.pos, data.sprites["water"], 2)
 			auto_tiling_area(block, data.grid_size, data.grid, 3)
-	wheel_move = get_mouse_wheel_move()
 	zoom_speed = 0.1
-	data.ZOOM += wheel_move * zoom_speed
-	if (wheel_move != 0):
-		print(f"wheel_move: {wheel_move}")
-		print(F"ZOOM: {data.ZOOM}")
-
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1
 	elif data.ZOOM > 5.0:

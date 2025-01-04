@@ -16,4 +16,3 @@ class Player(Entity):
 			self.pos.x -= self.speed
 		if(is_key_down(KeyboardKey.KEY_D)):
 			self.pos.x += self.speed
-
