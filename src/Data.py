@@ -2,7 +2,7 @@ from pyray import *
 from src.Entity import *
 from src.Player import *
 from src.Block import *
-from src.utils import *
+from src.tiles import *
 from typing import Dict
 from typing import List
 
@@ -13,8 +13,8 @@ class Data():
 		self.SCREEN_HEIGHT: int = 540
 		set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
 		init_window(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, "PtiCraft")
-		self.FPS = 60
-		self.ZOOM = 2
+		self.FPS: int = 60
+		self.ZOOM: int = 2
 		#set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32

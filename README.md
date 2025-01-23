@@ -5,3 +5,4 @@ goal
 	-Survival Mode
 	-Inventory
 	-Multy Layer (map)
+	-Multyplayer

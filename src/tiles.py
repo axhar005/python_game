@@ -48,7 +48,6 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 
 
 def auto_tiling_area(block: Block, grid_size: int, grid: List[List[Block]], area: int) -> None:
-	#block: Block = grid[int(pos.x)][int(pos.y)]
 	center_x = int(block.pos.x)
 	center_y = int(block.pos.y)
 	offset = area // 2

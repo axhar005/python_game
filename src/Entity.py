@@ -8,8 +8,8 @@ class Entity:
 		self.sprite: List[Texture] = sprite
 		self.sprite_size: int = len(sprite)
 		self.current_image: Texture = sprite[0]
-		self.animation_speed: float = 0.5
 		self.current_frame: int = 0
+		self.animation_speed: float = 0.25
 		self.animation_timer: float = 0.0
 
 	def change_sprite(self, sprite: List[Texture]):
@@ -18,7 +18,7 @@ class Entity:
 		self.sprite_size = len(sprite)
 		self.current_image = sprite[0]
 
-	def update(self):
+	def update(self) -> None:
 		pass
 	
 	def step(self) -> None:
@@ -26,3 +26,5 @@ class Entity:
 	
 	def __str__(self) -> str:
 		return f"EName: {self.name:5}\nEPos: {int(self.pos.x)},{int(self.pos.y)}"
+	
+

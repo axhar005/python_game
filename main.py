@@ -1,6 +1,6 @@
 from pyray import *
 from src.Data import Data
-from src.utils import *
+from src.tiles import *
 from math import ceil
 
 def render(data: Data) -> None:
@@ -29,7 +29,7 @@ def render(data: Data) -> None:
 	draw_texture_ex(data.player.current_image, (data.player.pos.x - 16, data.player.pos.y - 16), 0, 1, WHITE)
 
 
-def update_camera(data: Data):
+def update_camera(data: Data) -> None:
 	current_width = get_screen_width()
 	current_height = get_screen_height()
 
@@ -83,8 +83,8 @@ def step(data: Data) -> None:
 		data.mouse_pos.y = data.grid_size + data.mouse_pos.y
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 		block: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
-		if (block.name != "water"):
-			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("water", block.pos, data.sprites["water"], 2)
+		if (block.name != "stone"):
+			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("stone", block.pos, data.sprites["stone"], 2)
 			auto_tiling_area(block, data.grid_size, data.grid, 3)
 	zoom_speed = 0.1
 	if data.ZOOM < 0.1:
@@ -127,3 +127,4 @@ def loop(data: Data) -> None:
 if __name__ == "__main__":
 	data: Data = Data()
 	loop(data)
+	pass
