@@ -9,7 +9,6 @@ def render(data: Data) -> None:
 	tile_count_x = ceil((get_screen_width() / data.tile_size) / data.cam.zoom)
 	tile_count_y = ceil((get_screen_height() / data.tile_size) / data.cam.zoom)
 
-	# Trouver le "start" et le "end" en X/Y
 	start_x = int(grid_player_pos.x - tile_count_x / 2 - 1)
 	end_x = int(grid_player_pos.x + tile_count_x / 2 + 1)
 
@@ -24,6 +23,8 @@ def render(data: Data) -> None:
 			screen_y = col_index * data.tile_size
 			block = data.grid[grid_x][grid_y]
 			draw_texture_ex(block.current_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
+			if (block.corner_image != None):
+				draw_texture_ex(block.corner_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
 			if (grid_x == data.mouse_pos.x and grid_y == data.mouse_pos.y):
 				draw_texture_ex(data.sprites["selector"][0], Vector2(screen_x, screen_y), 0, 1, WHITE)
 	draw_texture_ex(data.player.current_image, (data.player.pos.x - 16, data.player.pos.y - 16), 0, 1, WHITE)

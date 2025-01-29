@@ -20,10 +20,16 @@ TILE: List[int] = [
 	2,   # 0b1100
 	5,   # 0b1101
 	1,   # 0b1110
-	4    # 0b1111
+	4,   # 0b1111
 ]
 
-DIRECTIONS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+DIRECTIONS = [
+	(0, -1),  # Top
+	(1, 0),   # Right
+	(0, 1),   # Bottom
+	(-1, 0),  # Left
+]
+
 
 def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 
@@ -35,12 +41,10 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 	for i, (dx, dy) in enumerate(DIRECTIONS):
 		nx = (ix + dx) % grid_size
 		ny = (iy + dy) % grid_size
-
 		neighbor_block = grid[nx][ny]
 		if neighbor_block.name == block.name:
 			num |= (1 << i)
-
-
+			
 	tile_index: int = TILE[num]
 	if (tile_index < len(block.sprite)):
 		block.tile_index = TILE[num]
