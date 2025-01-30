@@ -30,13 +30,20 @@ DIRECTIONS = [
 	(-1, 0),  # Left
 ]
 
+CORNER = [
+	(-1, -1), # Top left
+	(1, -1),  # Top Right
+	(-1, 1),  # Bottom left
+	(1, 1),   # Bottom Right
+]
+
 
 def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 
 	ix = int(block.pos.x)
 	iy = int(block.pos.y)
 
-	num = 0
+	num: int = 0b0000
 
 	for i, (dx, dy) in enumerate(DIRECTIONS):
 		nx = (ix + dx) % grid_size
@@ -47,8 +54,25 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 			
 	tile_index: int = TILE[num]
 	if (tile_index < len(block.sprite)):
-		block.tile_index = TILE[num]
-		block.current_image = block.sprite[block.tile_index]
+		block.tile_index = tile_index
+		block.current_image = block.sprite[tile_index]
+
+	num = 0b0000
+	if (len(block.sprite) == 20):
+		for i, (dx, dy) in enumerate(CORNER):
+			nx = (ix + dx) % grid_size
+			ny = (iy + dy) % grid_size
+			neighbor_block = grid[nx][ny]
+			if neighbor_block.name != block.name:
+					if (i == 0 and tile_index in (4, 5, 7, 8)):	#Top left
+						num |= (1 << (i))
+					if (i == 1 and tile_index in (3, 4, 6, 7)):	#Top right
+						num |= (1 << (i))
+					if (i == 2 and tile_index in (1, 2, 4, 5)):	#Bottom left
+						num |= (1 << (i))
+					if (i == 3 and tile_index in (0, 1, 3, 4)):	#Bottom right
+						num |= (1 << (i))
+	block.corner_index = num
 
 
 def auto_tiling_area(block: Block, grid_size: int, grid: List[List[Block]], area: int) -> None:

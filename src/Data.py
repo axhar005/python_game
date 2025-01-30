@@ -20,6 +20,7 @@ class Data():
 		self.tile_size = 32
 		self.grid_size = 60
 		self.mouse_pos: Vector2 = Vector2(0, 0)
+		self.mouse_old_block: Block = None
 		self.grid_width_px = self.grid_size * self.tile_size
 		self.grid_height_px = self.grid_size * self.tile_size
 		self.sprites: Dict[str, List[Texture]] = {}

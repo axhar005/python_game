@@ -7,8 +7,9 @@ class Block:
 		self.pos: Vector2 = position
 		self.sprite: List[Texture] = sprite
 		self.current_image: Texture = sprite[0]
-		self.corner_image: Texture = None
 		self.tile_index: int = 0
+		self.corner_index: int = 0b0000
+
 		
 		if (tile_index < len(sprite)):
 			self.tile_index = tile_index
