@@ -1,3 +1,4 @@
 .venv/
 .mypy_cache/
 mypy.ini
+src/__pycache__/

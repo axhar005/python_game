@@ -66,11 +66,11 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 			if neighbor_block.name != block.name:
 					if (i == 0 and tile_index in (4, 5, 7, 8)):	#Top left
 						num |= (1 << (i))
-					if (i == 1 and tile_index in (3, 4, 6, 7)):	#Top right
+					elif (i == 1 and tile_index in (3, 4, 6, 7)):	#Top right
 						num |= (1 << (i))
-					if (i == 2 and tile_index in (1, 2, 4, 5)):	#Bottom left
+					elif (i == 2 and tile_index in (1, 2, 4, 5)):	#Bottom left
 						num |= (1 << (i))
-					if (i == 3 and tile_index in (0, 1, 3, 4)):	#Bottom right
+					elif (i == 3 and tile_index in (0, 1, 3, 4)):	#Bottom right
 						num |= (1 << (i))
 	block.corner_index = num
 
