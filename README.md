@@ -1,6 +1,6 @@
 goal
 	-Auto tiling
-	-Light
+	-Light and vision
 	-Procedural Generation
 	-Survival Mode
 	-Inventory

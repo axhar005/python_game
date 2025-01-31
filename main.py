@@ -91,17 +91,25 @@ def step(data: Data) -> None:
 	if data.mouse_pos.y < 0:
 		data.mouse_pos.y = data.grid_size + data.mouse_pos.y
 	block_selected: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
+	
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT) and data.mouse_old_block != block_selected):
 		data.mouse_old_block = block_selected
 		if (block_selected.name != "stone"):
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("stone", block_selected.pos, data.sprites["stone"], 2)
 			auto_tiling_area(block_selected, data.grid_size, data.grid, 3)
-	zoom_speed = 0.1
+	
+	wheel_move = get_mouse_wheel_move()
+	if wheel_move != 0:
+		data.ZOOM -= wheel_move * 0.1
+		
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1
 	elif data.ZOOM > 5.0:
 		data.ZOOM= 5.0
-
+		
+	zoom_speed = 0.1
+	# Ajustement du zoom en fonction du mouvement de la molette
+	
 	if is_key_down(KeyboardKey.KEY_P) and data.ZOOM + zoom_speed <= 5.0:
 		data.ZOOM += zoom_speed
 
@@ -114,6 +122,7 @@ def step(data: Data) -> None:
 		obj.update()
 		obj.step()
 	update_camera(data)
+
 
 
 def loop(data: Data) -> None:

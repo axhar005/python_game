@@ -24,6 +24,7 @@ class Data():
 		self.grid_width_px = self.grid_size * self.tile_size
 		self.grid_height_px = self.grid_size * self.tile_size
 		self.sprites: Dict[str, List[Texture]] = {}
+		self.wheel_move: float = 0
 		file: str = "assets/images"
 		self.texture_path = {
 			"player":		[f"{file}/player/32/player_down_0.png", f"{file}/player/32/player_down_1.png"],
@@ -51,8 +52,6 @@ class Data():
 	def load_texure(self) -> None:
 		for key, paths in self.texture_path.items():
 			self.sprites[key] = [load_texture(path) for path in paths]
-			if key == "selector":
-				print(f"Selector texture size: {self.sprites['selector'][0].width}x{self.sprites['selector'][0].height}")
 
 	def __str__(self) -> str:
 		return f"{self}"

@@ -24,17 +24,17 @@ TILE: List[int] = [
 ]
 
 DIRECTIONS = [
-	(0, -1),  # Top
-	(1, 0),   # Right
-	(0, 1),   # Bottom
-	(-1, 0),  # Left
+	(0, -1),	# Top
+	(1, 0),		# Right
+	(0, 1),		# Bottom
+	(-1, 0),	# Left
 ]
 
 CORNER = [
-	(-1, -1), # Top left
-	(1, -1),  # Top Right
-	(-1, 1),  # Bottom left
-	(1, 1),   # Bottom Right
+	(-1, -1),	# Top left
+	(1, -1),	# Top Right
+	(-1, 1),	# Bottom left
+	(1, 1),		# Bottom Right
 ]
 
 
@@ -64,13 +64,13 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 			ny = (iy + dy) % grid_size
 			neighbor_block = grid[nx][ny]
 			if neighbor_block.name != block.name:
-					if (i == 0 and tile_index in (4, 5, 7, 8)):	#Top left
+					if (i == 0 and tile_index in (4, 5, 7, 8)):		# Top left
 						num |= (1 << (i))
-					elif (i == 1 and tile_index in (3, 4, 6, 7)):	#Top right
+					elif (i == 1 and tile_index in (3, 4, 6, 7)):	# Top right
 						num |= (1 << (i))
-					elif (i == 2 and tile_index in (1, 2, 4, 5)):	#Bottom left
+					elif (i == 2 and tile_index in (1, 2, 4, 5)):	# Bottom left
 						num |= (1 << (i))
-					elif (i == 3 and tile_index in (0, 1, 3, 4)):	#Bottom right
+					elif (i == 3 and tile_index in (0, 1, 3, 4)):	# Bottom right
 						num |= (1 << (i))
 	block.corner_index = num
 
