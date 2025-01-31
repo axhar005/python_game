@@ -16,4 +16,4 @@ class Block:
 		
 
 	def __str__(self) -> str:
-		return f"Name: {self.name:5}\nPos: {int(self.pos.x)},{int(self.pos.y)}\ntile_index: {self.tile_index}"
+		return f"Name: {self.name:5}\nPos: {int(self.pos.x)},{int(self.pos.y)}\ntile_index: {self.tile_index}\ncorner_index: {self.corner_index}"

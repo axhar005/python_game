@@ -25,14 +25,9 @@ def render(data: Data) -> None:
 			block = data.grid[grid_x][grid_y]
 			draw_texture_ex(block.current_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
 			if (block.corner_index != 0):
-				if ((block.corner_index >> 0) & 1):
-					draw_texture_ex(block.sprite[16], Vector2(screen_x, screen_y), 0, 1, WHITE)
-				if ((block.corner_index >> 1) & 1):
-					draw_texture_ex(block.sprite[17], Vector2(screen_x, screen_y), 0, 1, WHITE)
-				if ((block.corner_index >> 2) & 1):
-					draw_texture_ex(block.sprite[18], Vector2(screen_x, screen_y), 0, 1, WHITE)
-				if ((block.corner_index >> 3) & 1):
-					draw_texture_ex(block.sprite[19], Vector2(screen_x, screen_y), 0, 1, WHITE)
+				for i in range(4):
+					if ((block.corner_index >> i) & 1):
+						draw_texture_ex(block.sprite[16+i], Vector2(screen_x, screen_y), 0, 1, WHITE)
 			if (grid_x == data.mouse_pos.x and grid_y == data.mouse_pos.y):
 				draw_texture_ex(data.sprites["selector"][0], Vector2(screen_x, screen_y), 0, 1, WHITE)
 	draw_texture_ex(data.player.current_image, (data.player.pos.x - 16, data.player.pos.y - 16), 0, 1, WHITE)
@@ -98,16 +93,18 @@ def step(data: Data) -> None:
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("stone", block_selected.pos, data.sprites["stone"], 2)
 			auto_tiling_area(block_selected, data.grid_size, data.grid, 3)
 	
+		
+	zoom_speed = 0.1
+
 	wheel_move = get_mouse_wheel_move()
 	if wheel_move != 0:
-		data.ZOOM -= wheel_move * 0.1
-		
+		data.ZOOM += wheel_move * zoom_speed
+
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1
 	elif data.ZOOM > 5.0:
 		data.ZOOM= 5.0
 		
-	zoom_speed = 0.1
 	# Ajustement du zoom en fonction du mouvement de la molette
 	
 	if is_key_down(KeyboardKey.KEY_P) and data.ZOOM + zoom_speed <= 5.0:

@@ -15,7 +15,7 @@ class Data():
 		init_window(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, "PtiCraft")
 		self.FPS: int = 60
 		self.ZOOM: int = 2
-		#set_target_fps(60)
+		set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32
 		self.grid_size = 60
@@ -25,6 +25,7 @@ class Data():
 		self.grid_height_px = self.grid_size * self.tile_size
 		self.sprites: Dict[str, List[Texture]] = {}
 		self.wheel_move: float = 0
+		self.old_wheel_move: float = 0
 		file: str = "assets/images"
 		self.texture_path = {
 			"player":		[f"{file}/player/32/player_down_0.png", f"{file}/player/32/player_down_1.png"],
