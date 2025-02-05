@@ -58,7 +58,8 @@ def dev(data: Data) -> None:
 	draw_fps(10, 20)
 	t: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
 	p: Player = data.player
-	draw_text(f"{t}\n{p}", 10, 60, 20, WHITE)
+	type: str = f"Stype: {data.selected_block}"
+	draw_text(f"{t}\n{p}\n{type}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
@@ -87,6 +88,13 @@ def step(data: Data) -> None:
 		data.mouse_pos.y = data.grid_size + data.mouse_pos.y
 	data.block_hover = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
 	
+	wheel_move = get_mouse_wheel_move()
+	if wheel_move != 0:
+		if (wheel_move > 0):
+			data.selected_index = min(data.selected_index + 1, 5)
+		else:
+			data.selected_index = max(data.selected_index - 1, 0)
+			
 	if (data.selected_index == 0):
 		data.selected_block = "grass"
 	elif (data.selected_index == 1):
@@ -96,18 +104,10 @@ def step(data: Data) -> None:
 	elif (data.selected_index == 3):
 		data.selected_block = "deep_dirt"
 	elif (data.selected_index == 4):
-		data.selected_block = "stone"
+		data.selected_block = "stone_wall"
 	elif (data.selected_index == 5):
 		data.selected_block = "hill"
 	
-	wheel_move = get_mouse_wheel_move()
-	if wheel_move != 0:
-		if (wheel_move > 0):
-			data.selected_index = min(data.selected_index + 1, 5)
-		else:
-			data.selected_index = max(data.selected_index - 1, 0)
-		print(data.selected_index)
-		
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT) and data.mouse_old_block != data.block_hover):
 		data.mouse_old_block = data.block_hover
 		if (data.block_hover.name != data.selected_block):

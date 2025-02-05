@@ -37,7 +37,7 @@ class Data():
 			"grass":		[f"{file}/grass/32/grass_{i}.png" for i in range(16)],
 			"water":		[f"{file}/water/32/water_{i}.png" for i in range(16)],
 			"deep_dirt":	[f"{file}/deep_dirt/32/deep_dirt_{i}.png" for i in range(16)],
-			"stone": 		[f"{file}/stone/stone_wall/32/stone_wall_{i}.png" for i in range(20)],
+			"stone_wall": 	[f"{file}/stone/stone_wall/32/stone_wall_{i}.png" for i in range(20)],
 			"hill": 		[f"{file}/hill/32/hill_{i}.png" for i in range(20)]
 		}
 		self.load_texure()
