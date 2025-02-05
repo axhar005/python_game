@@ -58,8 +58,12 @@ def dev(data: Data) -> None:
 	draw_fps(10, 20)
 	t: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
 	p: Player = data.player
-	type: str = f"Stype: {data.selected_block}"
-	draw_text(f"{t}\n{p}\n{type}", 10, 60, 20, WHITE)
+	stype: str = f"Stype: {data.selected_block}"
+	if (data.block_hover):
+		hblock: str = f"Hblock: {data.block_hover.name}"
+	else:
+		hblock = ""
+	draw_text(f"{t}\n{p}\n{stype}\n{hblock}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
