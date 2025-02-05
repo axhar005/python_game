@@ -85,20 +85,36 @@ def step(data: Data) -> None:
 		data.mouse_pos.x = data.grid_size + data.mouse_pos.x
 	if data.mouse_pos.y < 0:
 		data.mouse_pos.y = data.grid_size + data.mouse_pos.y
-	block_selected: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
+	data.block_hover = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
 	
-	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT) and data.mouse_old_block != block_selected):
-		data.mouse_old_block = block_selected
-		if (block_selected.name != "stone"):
-			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block("stone", block_selected.pos, data.sprites["stone"], 2)
-			auto_tiling_area(block_selected, data.grid_size, data.grid, 3)
+	if (data.selected_index == 0):
+		data.selected_block = "grass"
+	elif (data.selected_index == 1):
+		data.selected_block = "dirt"
+	elif (data.selected_index == 2):
+		data.selected_block = "water"
+	elif (data.selected_index == 3):
+		data.selected_block = "deep_dirt"
+	elif (data.selected_index == 4):
+		data.selected_block = "stone"
+	elif (data.selected_index == 5):
+		data.selected_block = "hill"
 	
-		
-	zoom_speed = 0.1
-
 	wheel_move = get_mouse_wheel_move()
 	if wheel_move != 0:
-		data.ZOOM += wheel_move * zoom_speed
+		if (wheel_move > 0):
+			data.selected_index = min(data.selected_index + 1, 5)
+		else:
+			data.selected_index = max(data.selected_index - 1, 0)
+		print(data.selected_index)
+		
+	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT) and data.mouse_old_block != data.block_hover):
+		data.mouse_old_block = data.block_hover
+		if (data.block_hover.name != data.selected_block):
+			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites[data.selected_block], 2)
+			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
+	
+	zoom_speed = 0.1
 
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1
@@ -106,13 +122,10 @@ def step(data: Data) -> None:
 		data.ZOOM= 5.0
 		
 	# Ajustement du zoom en fonction du mouvement de la molette
-	
 	if is_key_down(KeyboardKey.KEY_P) and data.ZOOM + zoom_speed <= 5.0:
 		data.ZOOM += zoom_speed
-
 	if is_key_down(KeyboardKey.KEY_O) and data.ZOOM - zoom_speed >= 0.1:
 		data.ZOOM -= zoom_speed
-
 
 	# Objects
 	for obj in data.objects.values():

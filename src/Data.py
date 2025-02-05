@@ -21,6 +21,9 @@ class Data():
 		self.grid_size = 60
 		self.mouse_pos: Vector2 = Vector2(0, 0)
 		self.mouse_old_block: Block = None
+		self.block_hover: Block = None
+		self.selected_block: str = ""
+		self.selected_index: int = 0
 		self.grid_width_px = self.grid_size * self.tile_size
 		self.grid_height_px = self.grid_size * self.tile_size
 		self.sprites: Dict[str, List[Texture]] = {}
@@ -34,7 +37,8 @@ class Data():
 			"grass":		[f"{file}/grass/32/grass_{i}.png" for i in range(16)],
 			"water":		[f"{file}/water/32/water_{i}.png" for i in range(16)],
 			"deep_dirt":	[f"{file}/deep_dirt/32/deep_dirt_{i}.png" for i in range(16)],
-			"stone": 		[f"{file}/stone/stone_wall/32/stone_wall_{i}.png" for i in range(20)]
+			"stone": 		[f"{file}/stone/stone_wall/32/stone_wall_{i}.png" for i in range(20)],
+			"hill": 		[f"{file}/hill/32/hill_{i}.png" for i in range(20)]
 		}
 		self.load_texure()
 		self.objects: Dict[str, Entity] = {}

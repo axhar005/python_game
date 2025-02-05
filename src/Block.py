@@ -10,10 +10,9 @@ class Block:
 		self.tile_index: int = 0
 		self.corner_index: int = 0b0000
 
-		
 		if (tile_index < len(sprite)):
 			self.tile_index = tile_index
-		
+
 
 	def __str__(self) -> str:
 		return f"Name: {self.name:5}\nPos: {int(self.pos.x)},{int(self.pos.y)}\ntile_index: {self.tile_index}\ncorner_index: {self.corner_index}"
