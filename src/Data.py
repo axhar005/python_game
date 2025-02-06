@@ -55,6 +55,12 @@ class Data():
 		auto_tiling_area(self.grid[int(self.grid_size/2)][int(self.grid_size/2)], self.grid_size, self.grid, self.grid_size)
 
 	def load_texure(self) -> None:
+		#Gen the air block texture
+		air_img : Image = gen_image_color(32, 32, BLANK)
+		air_texture : Texture2D = load_texture_from_image(air_img)
+		unload_image(air_img)
+
+		self.sprites["air"] = [air_texture]
 		for key, paths in self.texture_path.items():
 			self.sprites[key] = [load_texture(path) for path in paths]
 

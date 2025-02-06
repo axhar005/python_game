@@ -48,7 +48,7 @@ def update_camera(data: Data) -> None:
 
 def draw(data: Data) -> None:
 	begin_mode_2d(data.cam)
-	clear_background(GRAY)
+	clear_background(BLACK)
 	render(data)
 	end_mode_2d()
 
@@ -100,7 +100,7 @@ def step(data: Data) -> None:
 			data.selected_index = max(data.selected_index - 1, 0)
 			
 	if (data.selected_index == 0):
-		data.selected_block = "grass"
+		data.selected_block = "air"
 	elif (data.selected_index == 1):
 		data.selected_block = "dirt"
 	elif (data.selected_index == 2):
