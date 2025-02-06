@@ -102,17 +102,19 @@ def step(data: Data) -> None:
 	if (data.selected_index == 0):
 		data.selected_block = "air"
 	elif (data.selected_index == 1):
-		data.selected_block = "dirt"
+		data.selected_block = "air"
 	elif (data.selected_index == 2):
-		data.selected_block = "water"
+		data.selected_block = "dirt"
 	elif (data.selected_index == 3):
-		data.selected_block = "deep_dirt"
+		data.selected_block = "water"
 	elif (data.selected_index == 4):
-		data.selected_block = "stone_wall"
+		data.selected_block = "deep_dirt"
 	elif (data.selected_index == 5):
+		data.selected_block = "stone_wall"
+	elif (data.selected_index == 6):
 		data.selected_block = "hill"
 	
-	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT) and data.mouse_old_block != data.block_hover):
+	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 		data.mouse_old_block = data.block_hover
 		if (data.block_hover.name != data.selected_block):
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites[data.selected_block], 2)
