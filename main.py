@@ -63,7 +63,7 @@ def dev_gui(data: Data) -> None:
 		hblock: Block = data.block_hover
 	else:
 		hblock = None
-	draw_text(f"Screen ->\nZoom: {data.ZOOM}\nHover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
+	draw_text(f"Screen ->\nZoom: {data.ZOOM}\n\nHover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
@@ -117,21 +117,19 @@ def step(data: Data) -> None:
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 		data.mouse_old_block = data.block_hover
 		if (data.block_hover.name != data.selected_block):
-			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites[data.selected_block], 2)
+			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites.get(data.selected_block), 2)
 			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
 	
 	zoom_speed = 0.2
 
-	if data.ZOOM < 0.1:
-		data.ZOOM= 0.1
+	if is_key_down(KeyboardKey.KEY_P):
+		data.ZOOM += zoom_speed
+	if is_key_down(KeyboardKey.KEY_O):
+		data.ZOOM -= zoom_speed
+	if data.ZOOM < 0.0:
+		data.ZOOM = 0.0
 	elif data.ZOOM > 5.0:
 		data.ZOOM= 5.0
-		
-	# Ajustement du zoom en fonction du mouvement de la molette
-	if is_key_down(KeyboardKey.KEY_P) and data.ZOOM + zoom_speed <= 5.0:
-		data.ZOOM += zoom_speed
-	if is_key_down(KeyboardKey.KEY_O) and data.ZOOM - zoom_speed >= 0.1:
-		data.ZOOM -= zoom_speed
 
 	# Objects
 	for obj in data.objects.values():
