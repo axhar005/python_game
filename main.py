@@ -54,7 +54,7 @@ def draw(data: Data) -> None:
 	end_mode_2d()
 
 
-def dev(data: Data) -> None:
+def dev_gui(data: Data) -> None:
 	draw_rectangle(5, 5, 200, 440, Color(0, 0, 0, 100))
 	draw_fps(10, 20)
 	p: Player = data.player
@@ -63,11 +63,11 @@ def dev(data: Data) -> None:
 		hblock: Block = data.block_hover
 	else:
 		hblock = None
-	draw_text(f"Hover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
+	draw_text(f"Screen ->\nZoom: {data.ZOOM}\nHover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
-	dev(data)
+	dev_gui(data)
 
 
 def step(data: Data) -> None:
@@ -120,7 +120,7 @@ def step(data: Data) -> None:
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites[data.selected_block], 2)
 			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
 	
-	zoom_speed = 0.1
+	zoom_speed = 0.2
 
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1

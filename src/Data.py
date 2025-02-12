@@ -14,7 +14,7 @@ class Data():
 		set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
 		init_window(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, "PtiCraft")
 		self.FPS: int = 60
-		self.ZOOM: int = 2
+		self.ZOOM: int = 1
 		set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32
