@@ -53,7 +53,7 @@ def draw(data: Data) -> None:
 	end_mode_2d()
 
 
-def dev(data: Data) -> None:
+def dev_gui(data: Data) -> None:
 	draw_rectangle(5, 5, 200, 440, Color(0, 0, 0, 100))
 	draw_fps(10, 20)
 	t: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
@@ -63,11 +63,11 @@ def dev(data: Data) -> None:
 		hblock: str = f"Hblock: {data.block_hover.name}"
 	else:
 		hblock = ""
-	draw_text(f"{t}\n{p}\n{stype}\n{hblock}", 10, 60, 20, WHITE)
+	draw_text(f"Zoom: {data.ZOOM}\n{t}\n{p}\n{stype}\n{hblock}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
-	dev(data)
+	dev_gui(data)
 
 
 def step(data: Data) -> None:
@@ -102,7 +102,7 @@ def step(data: Data) -> None:
 	if (data.selected_index == 0):
 		data.selected_block = "air"
 	elif (data.selected_index == 1):
-		data.selected_block = "air"
+		data.selected_block = "grass"
 	elif (data.selected_index == 2):
 		data.selected_block = "dirt"
 	elif (data.selected_index == 3):
@@ -120,7 +120,7 @@ def step(data: Data) -> None:
 			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites[data.selected_block], 2)
 			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
 	
-	zoom_speed = 0.1
+	zoom_speed = 0.2
 
 	if data.ZOOM < 0.1:
 		data.ZOOM= 0.1
