@@ -1,4 +1,4 @@
-goal
+goal:
 	-Auto tiling
 	-Light and vision
 	-Procedural Generation
@@ -6,3 +6,8 @@ goal
 	-Inventory
 	-Multy Layer (map)
 	-Multyplayer
+
+RN:
+	-map (layer, chunk, load/save)
+	-colision
+	-animation
