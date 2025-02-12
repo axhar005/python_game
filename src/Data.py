@@ -51,8 +51,8 @@ class Data():
 			]
 			for row in range(self.grid_size)
 		]
-		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"], 0)
-		auto_tiling_area(self.grid[int(self.grid_size/2)][int(self.grid_size/2)], self.grid_size, self.grid, self.grid_size)
+		self.grid[59][59] = Block("water", Vector2(59, 59), self.sprites["water"], 0)
+		auto_tiling_area(self.grid[0][0], self.grid_size, self.grid, self.grid_size)
 
 	def load_texure(self) -> None:
 		#Gen the air block texture

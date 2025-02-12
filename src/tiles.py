@@ -53,12 +53,12 @@ def auto_tiling(block: Block, grid_size: int, grid: List[List[Block]]) -> None:
 			num |= (1 << i)
 			
 	tile_index: int = TILE[num]
-	if (tile_index < len(block.sprite)):
+	if (tile_index < block.sprite_len):
 		block.tile_index = tile_index
 		block.current_image = block.sprite[tile_index]
 
 	num = 0b0000
-	if (len(block.sprite) == 20):
+	if (block.sprite_len == 20):
 		for i, (dx, dy) in enumerate(CORNER):
 			nx = (ix + dx) % grid_size
 			ny = (iy + dy) % grid_size

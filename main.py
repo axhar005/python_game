@@ -23,11 +23,12 @@ def render(data: Data) -> None:
 			screen_x = row_index * data.tile_size
 			screen_y = col_index * data.tile_size
 			block = data.grid[grid_x][grid_y]
-			draw_texture_ex(block.current_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
-			if (block.corner_index != 0):
-				for i in range(4):
-					if ((block.corner_index >> i) & 1):
-						draw_texture_ex(block.sprite[16+i], Vector2(screen_x, screen_y), 0, 1, WHITE)
+			if (block.current_image):
+				draw_texture_ex(block.current_image, Vector2(screen_x, screen_y), 0, 1, WHITE)
+				if (block.corner_index != 0):
+					for i in range(4):
+						if ((block.corner_index >> i) & 1):
+							draw_texture_ex(block.sprite[16+i], Vector2(screen_x, screen_y), 0, 1, WHITE)
 			if (grid_x == data.mouse_pos.x and grid_y == data.mouse_pos.y):
 				draw_texture_ex(data.sprites["selector"][0], Vector2(screen_x, screen_y), 0, 1, WHITE)
 	draw_texture_ex(data.player.current_image, (data.player.pos.x - 16, data.player.pos.y - 16), 0, 1, WHITE)
@@ -56,14 +57,13 @@ def draw(data: Data) -> None:
 def dev(data: Data) -> None:
 	draw_rectangle(5, 5, 200, 440, Color(0, 0, 0, 100))
 	draw_fps(10, 20)
-	t: Block = data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)]
 	p: Player = data.player
 	stype: str = f"Stype: {data.selected_block}"
 	if (data.block_hover):
-		hblock: str = f"Hblock: {data.block_hover.name}"
+		hblock: Block = data.block_hover
 	else:
-		hblock = ""
-	draw_text(f"{t}\n{p}\n{stype}\n{hblock}", 10, 60, 20, WHITE)
+		hblock = None
+	draw_text(f"Hover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
@@ -95,14 +95,14 @@ def step(data: Data) -> None:
 	wheel_move = get_mouse_wheel_move()
 	if wheel_move != 0:
 		if (wheel_move > 0):
-			data.selected_index = min(data.selected_index + 1, 5)
+			data.selected_index = min(data.selected_index + 1, 6)
 		else:
 			data.selected_index = max(data.selected_index - 1, 0)
 			
 	if (data.selected_index == 0):
 		data.selected_block = "air"
 	elif (data.selected_index == 1):
-		data.selected_block = "air"
+		data.selected_block = "grass"
 	elif (data.selected_index == 2):
 		data.selected_block = "dirt"
 	elif (data.selected_index == 3):
@@ -138,7 +138,6 @@ def step(data: Data) -> None:
 		obj.update()
 		obj.step()
 	update_camera(data)
-
 
 
 def loop(data: Data) -> None:
