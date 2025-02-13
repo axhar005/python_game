@@ -4,6 +4,7 @@ from typing import List
 class Block:
 	def __init__(self, name: str, position: Vector2, sprite: List[Texture], tile_index: int) -> None:
 		self.name: str = name
+		self.solid: bool = False
 		self.pos: Vector2 = position
 		self.sprite: List[Texture] = sprite
 		self.current_image: Texture = None

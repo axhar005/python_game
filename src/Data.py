@@ -14,7 +14,7 @@ class Data():
 		set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
 		init_window(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, "PtiCraft")
 		self.FPS: int = 60
-		self.ZOOM: int = 1
+		self.zoom: int = 1
 		set_target_fps(60)
 		self.cam = Camera2D(Vector2(get_screen_width() / 2 - 16, get_screen_height() / 2 - 16), Vector2(0,0), 0, 1)
 		self.tile_size = 32
@@ -32,11 +32,16 @@ class Data():
 		file: str = "assets/images"
 		self.texture_path = {
 			"player":		[f"{file}/player/32/player_down_0.png", f"{file}/player/32/player_down_1.png"],
+			"under_player":	[f"{file}/under_player.png"],
 			"dirt": 		[f"{file}/dirt/32/dirt_0.png"],
 			"selector": 	[f"{file}/selector.png"],
 			"grass":		[f"{file}/grass/32/grass_{i}.png" for i in range(16)],
 			"water":		[f"{file}/water/32/water_{i}.png" for i in range(16)],
+			"sand":			[f"{file}/sand/32/sand_{i}.png" for i in range(16)],
 			"deep_dirt":	[f"{file}/deep_dirt/32/deep_dirt_{i}.png" for i in range(16)],
+			"wood_floor":	[f"{file}/wood/wood_floor/32/wood_floor.png"],
+			"wood_wall": 	[f"{file}/wood/wood_wall/32/wood_wall_{i}.png" for i in range(20)],
+			"stone_floor":	[f"{file}/stone/stone_floor/32/stone_floor.png"],
 			"stone_wall": 	[f"{file}/stone/stone_wall/32/stone_wall_{i}.png" for i in range(20)],
 			"hill": 		[f"{file}/hill/32/hill_{i}.png" for i in range(20)]
 		}
@@ -53,6 +58,20 @@ class Data():
 		]
 		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"], 0)
 		auto_tiling_area(self.grid[0][0], self.grid_size, self.grid, self.grid_size)
+
+		self.block_names = [
+			"air",
+			"grass",
+			"dirt",
+			"deep_dirt",
+			"water",
+			"sand",
+			"wood_wall",
+			"wood_floor",
+			"stone_wall",
+			"stone_floor",
+			"hill",
+		]
 
 	def load_texure(self) -> None:
 		#Gen the air block texture

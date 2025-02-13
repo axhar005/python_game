@@ -42,7 +42,7 @@ def update_camera(data: Data) -> None:
 	scale_y = current_height / data.SCREEN_HEIGHT
 	scale = min(scale_x, scale_y)
 
-	data.cam.zoom = scale + data.ZOOM
+	data.cam.zoom = scale + data.zoom
 	data.cam.offset = Vector2(current_width / 2, current_height / 2)
 	data.cam.target = data.player.pos
 
@@ -63,7 +63,7 @@ def dev_gui(data: Data) -> None:
 		hblock: Block = data.block_hover
 	else:
 		hblock = None
-	draw_text(f"Screen ->\nZoom: {data.ZOOM}\n\nHover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
+	draw_text(f"Screen ->\nZoom: {data.zoom:.2f}\n\nHover ->\n{hblock}\n\nPlayer ->\n{p}\n\nSelector ->\n{stype}", 10, 60, 20, WHITE)
 
 
 def draw_gui(data: Data) -> None:
@@ -95,24 +95,17 @@ def step(data: Data) -> None:
 	wheel_move = get_mouse_wheel_move()
 	if wheel_move != 0:
 		if (wheel_move > 0):
-			data.selected_index = min(data.selected_index + 1, 6)
+			data.selected_index = min(data.selected_index + 1, len(data.block_names)-1)
 		else:
 			data.selected_index = max(data.selected_index - 1, 0)
-			
-	if (data.selected_index == 0):
-		data.selected_block = "air"
-	elif (data.selected_index == 1):
-		data.selected_block = "grass"
-	elif (data.selected_index == 2):
-		data.selected_block = "dirt"
-	elif (data.selected_index == 3):
-		data.selected_block = "water"
-	elif (data.selected_index == 4):
-		data.selected_block = "deep_dirt"
-	elif (data.selected_index == 5):
-		data.selected_block = "stone_wall"
-	elif (data.selected_index == 6):
-		data.selected_block = "hill"
+
+	if (is_key_pressed(KeyboardKey.KEY_RIGHT)):
+		data.selected_index = min(data.selected_index + 1, len(data.block_names)-1)
+	elif(is_key_pressed(KeyboardKey.KEY_LEFT)):
+		data.selected_index = max(data.selected_index - 1, 0)
+
+	data.selected_block = data.block_names[data.selected_index]
+	
 	
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 		data.mouse_old_block = data.block_hover
@@ -123,13 +116,13 @@ def step(data: Data) -> None:
 	zoom_speed = 0.2
 
 	if is_key_down(KeyboardKey.KEY_P):
-		data.ZOOM += zoom_speed
+		data.zoom += zoom_speed
 	if is_key_down(KeyboardKey.KEY_O):
-		data.ZOOM -= zoom_speed
-	if data.ZOOM < 0.0:
-		data.ZOOM = 0.0
-	elif data.ZOOM > 5.0:
-		data.ZOOM= 5.0
+		data.zoom -= zoom_speed
+	if data.zoom < 0.0:
+		data.zoom = 0.0
+	elif data.zoom > 5.0:
+		data.zoom= 5.0
 
 	# Objects
 	for obj in data.objects.values():
