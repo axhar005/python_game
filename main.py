@@ -1,8 +1,22 @@
 from pyray import *
 from src.tiles import *
 from src.Data import Data
+from src.blocks.Air import Air
 from src.blocks.Dirt import *
 from math import ceil
+from typing import Dict
+from typing import List
+
+def init(data: Data):
+	data.grid = [
+		[
+			Block("grass", Vector2(row, col), data.sprites["grass"])
+			for col in range(data.grid_size)
+		]
+		for row in range(data.grid_size)
+	]
+	data.grid[0][0] = Block("water", Vector2(0, 0), data.sprites["water"])
+	auto_tiling_area(data.grid[0][0], data.grid_size, data.grid, data.grid_size)
 
 def render(data: Data) -> None:
 	grid_player_pos: Vector2 = Vector2(data.player.pos.x/data.tile_size, data.player.pos.y/data.tile_size)
@@ -95,16 +109,15 @@ def step(data: Data) -> None:
 	wheel_move = get_mouse_wheel_move()
 	if wheel_move != 0:
 		if (wheel_move > 0):
-			data.selected_index = min(data.selected_index + 1, len(data.block_names)-1)
+			data.selected_index = min(data.selected_index + 1, len(data.block_names) - 1)
 		else:
 			data.selected_index = max(data.selected_index - 1, 0)
 
 	if (is_key_pressed(KeyboardKey.KEY_RIGHT)):
-		data.selected_index = min(data.selected_index + 1, len(data.block_names)-1)
+		data.selected_index = min(data.selected_index + 1, len(data.block_names) - 1)
 	elif(is_key_pressed(KeyboardKey.KEY_LEFT)):
 		data.selected_index = max(data.selected_index - 1, 0)
 
-	data.selected_block = data.block_names[data.selected_index]
 	
 	
 	#if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
@@ -112,20 +125,8 @@ def step(data: Data) -> None:
 	#	if (data.block_hover.name != data.selected_block):
 	#		data.set_block(data.mouse_pos, data.block_names[data.selected_index])
 	
-	if (data.selected_index == 0):
-		data.selected_block = "air"
-	elif (data.selected_index == 1):
-		data.selected_block = "grass"
-	elif (data.selected_index == 2):
-		data.selected_block = "dirt"
-	elif (data.selected_index == 3):
-		data.selected_block = "water"
-	elif (data.selected_index == 4):
-		data.selected_block = "deep_dirt"
-	elif (data.selected_index == 5):
-		data.selected_block = "stone_wall"
-	elif (data.selected_index == 6):
-		data.selected_block = "hill"
+
+	data.selected_block = data.block_names[data.selected_index]
 		
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):	
 		data.mouse_old_block = data.block_hover
@@ -171,5 +172,7 @@ def loop(data: Data) -> None:
 
 if __name__ == "__main__":
 	data: Data = Data()
+	init(data)
+	data.test1 = Air((2,2))
 	loop(data)
 	pass

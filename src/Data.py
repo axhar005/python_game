@@ -74,16 +74,7 @@ class Data():
 			"hill": Hill,
 		}
 		self.block_names = list(self.block_classes.keys())
-		
-		self.grid: List[List[Block]] = [
-			[
-				Block("grass", Vector2(row, col), self.sprites["grass"])
-				for col in range(self.grid_size)
-			]
-			for row in range(self.grid_size)
-		]
-		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"])
-		auto_tiling_area(self.grid[0][0], self.grid_size, self.grid, self.grid_size)
+		self.grid: List[List[Block]]
 
 	def set_block(self, pos: Vector2, block_name: str) -> None:
 		block_class = self.block_classes.get(block_name)
