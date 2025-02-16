@@ -3,6 +3,17 @@ from src.tiles import *
 from src.Entity import *
 from src.Player import *
 from src.Block import *
+from src.blocks.Air import Air
+from src.blocks.Grass import Grass
+from src.blocks.Dirt import Dirt
+from src.blocks.Deep_dirt import Deep_dirt
+from src.blocks.Sand import Sand
+from src.blocks.Water import Water
+from src.blocks.Hill import Hill
+from src.blocks.Wood_wall import Wood_wall
+from src.blocks.Wood_floor import Wood_floor
+from src.blocks.Stone_floor import Stone_floor
+from src.blocks.Stone_wall import Stone_wall
 from typing import Dict
 from typing import List
 
@@ -49,15 +60,40 @@ class Data():
 		self.objects: Dict[str, Entity] = {}
 		self.objects["player"] = Player("player", Vector2(0, 0), self.sprites["player"])
 		self.player = self.objects["player"]
+		self.block_classes = {
+			"air": Air,
+			"grass": Grass,
+			"dirt": Dirt,
+			"deep_dirt": Deep_dirt,
+			"water": Water,
+			"sand": Sand,
+			"wood_wall": Wood_wall,
+			"wood_floor": Wood_floor,
+			"stone_wall": Stone_wall,
+			"stone_floor": Stone_floor,
+			"hill": Hill,
+		}
+		self.block_names = list(self.block_classes.keys())
+		
 		self.grid: List[List[Block]] = [
 			[
 				Block("grass", Vector2(row, col), self.sprites["grass"])
+				#self.set_block(Vector2(row, col), "grass")
 				for col in range(self.grid_size)
 			]
 			for row in range(self.grid_size)
 		]
 		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"])
 		auto_tiling_area(self.grid[0][0], self.grid_size, self.grid, self.grid_size)
+
+	def set_block(self, pos: Vector2, block_name: str) -> None:
+		block_class = self.block_classes.get(block_name)
+		if block_class:
+			new_block = block_class(pos)
+			self.grid[int(pos.x)][int(pos.y)] = new_block
+			auto_tiling_area(self.grid[int(pos.x)][int(pos.y)], self.grid_size, self.grid, 3)
+		else:
+			print(f"Classe de bloc inconnue : {block_name}")
 
 
 	def load_texure(self) -> None:

@@ -4,8 +4,6 @@ from src.Data import Data
 from src.blocks.Dirt import *
 from math import ceil
 
-test: Data = Data()
-
 
 def render(data: Data) -> None:
 	grid_player_pos: Vector2 = Vector2(data.player.pos.x/data.tile_size, data.player.pos.y/data.tile_size)

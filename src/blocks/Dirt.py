@@ -1,5 +1,7 @@
-from src.Data import *
+from pyray import *
+from src.Block import Block
+
 
 class Dirt(Block):
-	def __init__(self, position: Vector2, data: Data):
-		super().__init__("dirt", position, data.sprites["dirt"])
+	def __init__(self, position: Vector2):
+		super().__init__("dirt", position, None)
