@@ -18,7 +18,7 @@ from typing import Dict
 from typing import List
 
 class Data():
-	
+
 	def __init__(self) -> None:
 		self.SCREEN_WIDTH: int = 960
 		self.SCREEN_HEIGHT: int = 540
@@ -78,7 +78,6 @@ class Data():
 		self.grid: List[List[Block]] = [
 			[
 				Block("grass", Vector2(row, col), self.sprites["grass"])
-				#self.set_block(Vector2(row, col), "grass")
 				for col in range(self.grid_size)
 			]
 			for row in range(self.grid_size)

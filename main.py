@@ -4,7 +4,6 @@ from src.Data import Data
 from src.blocks.Dirt import *
 from math import ceil
 
-
 def render(data: Data) -> None:
 	grid_player_pos: Vector2 = Vector2(data.player.pos.x/data.tile_size, data.player.pos.y/data.tile_size)
 	
@@ -108,11 +107,32 @@ def step(data: Data) -> None:
 	data.selected_block = data.block_names[data.selected_index]
 	
 	
-	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
+	#if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
+	#	data.mouse_old_block = data.block_hover
+	#	if (data.block_hover.name != data.selected_block):
+	#		data.set_block(data.mouse_pos, data.block_names[data.selected_index])
+	
+	if (data.selected_index == 0):
+		data.selected_block = "air"
+	elif (data.selected_index == 1):
+		data.selected_block = "grass"
+	elif (data.selected_index == 2):
+		data.selected_block = "dirt"
+	elif (data.selected_index == 3):
+		data.selected_block = "water"
+	elif (data.selected_index == 4):
+		data.selected_block = "deep_dirt"
+	elif (data.selected_index == 5):
+		data.selected_block = "stone_wall"
+	elif (data.selected_index == 6):
+		data.selected_block = "hill"
+		
+	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):	
 		data.mouse_old_block = data.block_hover
 		if (data.block_hover.name != data.selected_block):
-			data.set_block(data.mouse_pos, data.block_names[data.selected_index])
-	
+			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites.get(data.selected_block))
+			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
+		
 	zoom_speed = 0.2
 
 	if is_key_down(KeyboardKey.KEY_P):
