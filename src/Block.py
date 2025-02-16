@@ -2,7 +2,7 @@ from pyray import *
 from typing import List
 
 class Block:
-	def __init__(self, name: str, position: Vector2, sprite: List[Texture], tile_index: int) -> None:
+	def __init__(self, name: str, position: Vector2, sprite: List[Texture]) -> None:
 		self.name: str = name
 		self.solid: bool = False
 		self.pos: Vector2 = position
@@ -15,9 +15,6 @@ class Block:
 		if (sprite):
 			self.sprite_len = len(sprite)
 			self.current_image = sprite[0]
-
-		if (tile_index < self.sprite_len):
-			self.tile_index = tile_index
 
 
 	def change_sprite(self, sprite: List[Texture]):

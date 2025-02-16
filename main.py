@@ -1,7 +1,10 @@
 from pyray import *
-from src.Data import Data
 from src.tiles import *
+from src.Data import Data
+from src.blocks.Dirt import *
 from math import ceil
+
+test: Data = Data()
 
 
 def render(data: Data) -> None:
@@ -110,8 +113,7 @@ def step(data: Data) -> None:
 	if(is_mouse_button_down(MouseButton.MOUSE_BUTTON_LEFT)):
 		data.mouse_old_block = data.block_hover
 		if (data.block_hover.name != data.selected_block):
-			data.grid[int(data.mouse_pos.x)][int(data.mouse_pos.y)] = Block(data.selected_block, data.block_hover.pos, data.sprites.get(data.selected_block), 2)
-			auto_tiling_area(data.block_hover, data.grid_size, data.grid, 3)
+			data.set_block(data.mouse_pos, data.block_names[data.selected_index])
 	
 	zoom_speed = 0.2
 

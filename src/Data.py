@@ -1,8 +1,8 @@
 from pyray import *
+from src.tiles import *
 from src.Entity import *
 from src.Player import *
 from src.Block import *
-from src.tiles import *
 from typing import Dict
 from typing import List
 
@@ -51,27 +51,14 @@ class Data():
 		self.player = self.objects["player"]
 		self.grid: List[List[Block]] = [
 			[
-				Block("grass", Vector2(row, col), self.sprites["grass"], 0)
+				Block("grass", Vector2(row, col), self.sprites["grass"])
 				for col in range(self.grid_size)
 			]
 			for row in range(self.grid_size)
 		]
-		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"], 0)
+		self.grid[0][0] = Block("water", Vector2(0, 0), self.sprites["water"])
 		auto_tiling_area(self.grid[0][0], self.grid_size, self.grid, self.grid_size)
 
-		self.block_names = [
-			"air",
-			"grass",
-			"dirt",
-			"deep_dirt",
-			"water",
-			"sand",
-			"wood_wall",
-			"wood_floor",
-			"stone_wall",
-			"stone_floor",
-			"hill",
-		]
 
 	def load_texure(self) -> None:
 		#Gen the air block texture
@@ -82,6 +69,7 @@ class Data():
 		# self.sprites["air"] = [air_texture]
 		for key, paths in self.texture_path.items():
 			self.sprites[key] = [load_texture(path) for path in paths]
+
 
 	def __str__(self) -> str:
 		return f"{self}"
